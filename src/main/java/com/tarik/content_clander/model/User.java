@@ -1,42 +1,65 @@
-package com.tarik.content_clander.model;
+package  com.tarik.content_clander.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_U;
+    private Long id;
 
-    private String name;
+    private String username;
     private String email;
-    private String number;
+    private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Declaration> declarations;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+    }
 
-    public Long getId_U() { return id_U; }
-    public void setId_U(Long id_U) { this.id_U = id_U; }
+    @Override
+    public String getUsername(){return username;}
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    @Override
+    public  String getPassword(){return password;}
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    @Override
+    public boolean isAccountNonExpired(){return true;}
 
-    public String getNumber() { return number; }
-    public void setNumber(String number) { this.number = number; }
+    @Override
+    public boolean isAccountNonLocked(){return true;}
 
-    public Role getRole() { return role; }
-    public void setRole(Role role) { this.role = role; }
+    @Override
+    public boolean isCredentialsNonExpired(){return true;}
 
-    public List<Declaration> getDeclarations() { return declarations; }
-    public void setDeclarations(List<Declaration> declarations) { this.declarations = declarations; }
+    @Override
+    public boolean isEnabled(){return true;}
+
+    public Long getId_U(){return id;}
+    public void setId_U(Long id){this.id =id;}
+    public void setUsername(String username){this.username =username;}
+    public String getEmail(){return email;}
+    public void setEmail(String email){this.email =email;}
+    public void setPassword(String password){this.password =password;}
+    public List<Role> getRoles() { return roles; }
+    public void setRoles(List<Role> roles) { this.roles = roles; }
 }

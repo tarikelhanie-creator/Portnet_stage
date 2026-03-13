@@ -2,40 +2,42 @@ package com.tarik.content_clander.controller;
 
 import com.tarik.content_clander.model.Role;
 import com.tarik.content_clander.repository.RoleRepository;
+import com.tarik.content_clander.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/roles")
-public class RoleController {
+@RequestMapping("/api/auth/roles")
+public class RoleController{
 
     @Autowired
-    private RoleRepository repo;
+    private RoleService roleService;
 
     @GetMapping
-    public List<Role> getAll() { return repo.findAll(); }
+    public List<Role> getAll(){
+        return roleService.getAllRoles();
+    }
 
     @GetMapping("/{id}")
-    public Role getById(@PathVariable Long id) {
-        return repo.findById(id).orElseThrow();
+    public ResponseEntity<Role> getById(@PathVariable Long id){
+        return ResponseEntity.ok(roleService.getRoleById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Role> create(@RequestBody Role role) {
-        return ResponseEntity.status(201).body(repo.save(role));
+    public ResponseEntity<Role> create(@RequestBody Role role){
+        return ResponseEntity.status(201).body(roleService.creatRole(role));
     }
 
     @PutMapping("/{id}")
-    public Role update(@PathVariable Long id, @RequestBody Role role) {
-        role.setId_R(id);
-        return repo.save(role);
+    public ResponseEntity<Role> update(@PathVariable Long id, @RequestBody Role role){
+        return  ResponseEntity.ok(roleService.editByRoleId(role,id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        repo.deleteById(id);
+    public ResponseEntity<Void>  delete(@PathVariable Long id){
+        roleService.deleteRole(id);
         return ResponseEntity.noContent().build();
     }
 }
