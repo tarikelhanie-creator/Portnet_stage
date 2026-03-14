@@ -1,5 +1,6 @@
 package com.tarik.content_clander.controller;
 
+import com.tarik.content_clander.DTO.DeclarationDTO;
 import com.tarik.content_clander.model.Declaration;
 import com.tarik.content_clander.repository.DeclarationRepository;
 import com.tarik.content_clander.services.DeclarationService;
@@ -16,25 +17,25 @@ public class DeclarationController {
     private DeclarationService declarationService;
 
     @GetMapping
-    public List<Declaration> getAll() { return declarationService.getAllD();}
+    public List<DeclarationDTO> getAll() { return declarationService.getAllD();}
 
     @GetMapping("/{id}")
-    public Declaration getById(@PathVariable Long id) {
+    public DeclarationDTO getById(@PathVariable Long id) {
         return declarationService.getDById(id);
     }
 
     @GetMapping("/user/{userId}")
-    public List<Declaration> getByUser(@PathVariable Long userId) {
+    public List<DeclarationDTO> getByUser(@PathVariable Long userId) {
         return declarationService.getU(userId);
     }
 
     @PostMapping
-    public ResponseEntity<Declaration> create(@RequestBody Declaration d) {
+    public ResponseEntity<DeclarationDTO> create(@RequestBody Declaration d) {
         return ResponseEntity.status(201).body(declarationService.creatD(d));
     }
 
     @PutMapping("/{id}")
-    public Declaration update(@PathVariable Long id, @RequestBody Declaration d) {
+    public DeclarationDTO update(@PathVariable Long id, @RequestBody Declaration d) {
         return declarationService.editDById(id,d);
     }
 

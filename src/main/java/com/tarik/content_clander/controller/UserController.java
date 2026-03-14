@@ -1,6 +1,7 @@
 package com.tarik.content_clander.controller;
 
 import com.tarik.content_clander.model.User;
+import com.tarik.content_clander.DTO.UserDTO;
 import com.tarik.content_clander.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +16,20 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAll() { return userService.getAllUsers(); }
+    public List<UserDTO> getAll() { return userService.getAllUsers(); }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
+    public UserDTO getById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<UserDTO> create(@RequestBody User user) {
         return ResponseEntity.status(201).body(userService.createUser(user));
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
+    public UserDTO update(@PathVariable Long id, @RequestBody User user) {
         return userService.editUserByid(user,id);
     }
 

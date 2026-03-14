@@ -4,15 +4,15 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "marchandises")
-public class Marchandise {
+public class Merchandise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_M;
 
     private String designation;
-    private float poids;
-    private float valeur;
+    private float weight;
+    private float value;
     private int quantite;
 
     @ManyToOne
@@ -25,11 +25,11 @@ public class Marchandise {
     public String getDesignation() { return designation; }
     public void setDesignation(String designation) { this.designation = designation; }
 
-    public float getPoids() { return poids; }
-    public void setPoids(float poids) { this.poids = poids; }
+    public float getWeight() { return weight; }
+    public void setPoids(float poids) { this.weight = poids; }
 
-    public float getValeur() { return valeur; }
-    public void setValeur(float valeur) { this.valeur = valeur; }
+    public float getValue() { return value; }
+    public void setValeur(float valeur) { this.value = valeur; }
 
     public int getQuantite() { return quantite; }
     public void setQuantite(int quantite) { this.quantite = quantite; }

@@ -22,7 +22,7 @@ public class Declaration {
     private User user;
 
     @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL)
-    private List<Marchandise> marchandises;
+    private List<Merchandise> marchandises;
 
     public Long getId_D() { return id_D; }
     public void setId_D(Long id_D) { this.id_D = id_D; }
@@ -42,6 +42,6 @@ public class Declaration {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
 
-    public List<Marchandise> getMarchandises() { return marchandises; }
-    public void setMarchandises(List<Marchandise> marchandises) { this.marchandises = marchandises; }
+    public List<Merchandise> getMarchandises() { return marchandises; }
+    public void setMarchandises(List<Merchandise> marchandises) { this.marchandises = marchandises; }
 }
