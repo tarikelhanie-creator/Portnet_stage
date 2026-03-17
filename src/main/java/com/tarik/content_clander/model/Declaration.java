@@ -14,8 +14,10 @@ public class Declaration {
 
     private String number;
     private String type;
-    private String statut;
     private LocalDate date_creation;
+
+    @Enumerated(EnumType.STRING)
+    private DeclarationStatus statut;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -33,8 +35,10 @@ public class Declaration {
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 
-    public String getStatut() { return statut; }
-    public void setStatut(String statut) { this.statut = statut; }
+    public void setStatut(DeclarationStatus statut) { this.statut = statut; }
+    public DeclarationStatus getStatut() { return statut; }
+
+
 
     public LocalDate getDate_creation() { return date_creation; }
     public void setDate_creation(LocalDate date_creation) { this.date_creation = date_creation; }

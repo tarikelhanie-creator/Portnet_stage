@@ -19,38 +19,38 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-   @Autowired
+    @Autowired
     private JwtAuthFilter jwtAuthFilter;
 
-   @Autowired
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-   @Bean
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-       http
-               .csrf(csrf -> csrf.disable())
-               .sessionManagement(s-> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-               .authorizeHttpRequests(auth->auth
-                       .requestMatchers("/api/auth/**").permitAll()
-                       .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                       .requestMatchers("/api/users/**").hasRole("ADMIN")
-                       .requestMatchers("/api/roles/**").hasRole("ADMIN")
-                       .requestMatchers("/api/declarations/**").hasAnyRole("CLIENT","ADMIN")
-                       .requestMatchers("/api/merchandise/**").hasAnyRole("CLIENT", "ADMIN")
-                       .anyRequest().authenticated()
-               )
-               .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-       return http.build();
-   }
+        http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(s-> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth->auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+                        .requestMatchers("/api/roles/**").hasRole("ADMIN")
+                        .requestMatchers("/api/declarations/**").hasAnyRole("CLIENT","ADMIN")
+                        .requestMatchers("/api/merchandise/**").hasAnyRole("CLIENT", "ADMIN")
+                        .anyRequest().permitAll()
+                )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
 
-   @Bean
+    @Bean
     public  AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws  Exception{
-       return configuration.getAuthenticationManager();
-   }
+        return configuration.getAuthenticationManager();
+    }
 
-   @Bean
+    @Bean
     public  PasswordEncoder passwordEncoder(){
-       return new BCryptPasswordEncoder();
-   }
+        return new BCryptPasswordEncoder();
+    }
 
 }

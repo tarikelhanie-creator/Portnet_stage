@@ -1,15 +1,17 @@
 package com.tarik.content_clander.DTO;
 
+import com.tarik.content_clander.model.DeclarationStatus;
+
 import java.time.LocalDate;
 
 public class DeclarationDTO {
     private Long id_D;
     private String number;
     private String type;
-    private String status;
+    private DeclarationStatus status;
     private LocalDate date_C;
 
-    public DeclarationDTO (Long id_D, String number, String type, String status, LocalDate date){
+    public DeclarationDTO (Long id_D, String number, String type, DeclarationStatus status, LocalDate date){
         this.id_D=id_D;
         this.number =number;
         this.type =type;
@@ -20,6 +22,6 @@ public class DeclarationDTO {
     public Long getId_D(){return id_D;}
     public String getNumber(){return number;}
     public String getType(){return type;}
-    public String getStatus(){return status;}
+    public DeclarationStatus getStatus(){return status;}
     public LocalDate getDate_C() {return date_C;}
 }

@@ -2,6 +2,7 @@ package com.tarik.content_clander.controller;
 
 import com.tarik.content_clander.DTO.DeclarationDTO;
 import com.tarik.content_clander.model.Declaration;
+import com.tarik.content_clander.model.DeclarationStatus;
 import com.tarik.content_clander.repository.DeclarationRepository;
 import com.tarik.content_clander.services.DeclarationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,20 @@ public class DeclarationController {
         declarationService.DeleteB(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/submit")
+    public ResponseEntity<DeclarationStatus> submitToportnet(@PathVariable Long id){
+        return ResponseEntity.ok(declarationService.submitToPortnet(id));
+    }
+
+    @PutMapping("/{id}/send")
+    public ResponseEntity<DeclarationStatus> sendToDuan(@PathVariable Long id){
+        return ResponseEntity.ok(declarationService.sendToDuan(id));
+    }
+
+    @PutMapping("/{id}/state")
+    public ResponseEntity<DeclarationStatus> updateToduan(@PathVariable Long id, @RequestParam DeclarationStatus status ){
+        return ResponseEntity.ok(declarationService.updateStatus(id,status));
+    }
+
 }
